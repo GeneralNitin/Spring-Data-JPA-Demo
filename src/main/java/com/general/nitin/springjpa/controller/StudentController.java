@@ -12,7 +12,7 @@ import java.util.List;
 public class StudentController {
 
 
-    private  StudentService studentService;
+    private final StudentService studentService;
 
     // Autowired, Constructor Based Injection, Setter Based Injection
     public StudentController(StudentService studentService) {
