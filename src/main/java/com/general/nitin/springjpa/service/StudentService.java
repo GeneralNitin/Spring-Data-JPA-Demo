@@ -3,6 +3,7 @@ package com.general.nitin.springjpa.service;
 import com.general.nitin.springjpa.entity.Course;
 import com.general.nitin.springjpa.entity.Department;
 import com.general.nitin.springjpa.entity.Student;
+import com.general.nitin.springjpa.exception.ResourceNotFoundException;
 import com.general.nitin.springjpa.repository.CourseRepository;
 import com.general.nitin.springjpa.repository.DepartmentRepository;
 import com.general.nitin.springjpa.repository.StudentRepository;
@@ -29,7 +30,7 @@ public class StudentService {
 
         // Set Department (ManyToOne)
         Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + departmentId));
         student.setDepartment(department);
 
         // Set Courses (ManyToMany)
@@ -45,7 +46,7 @@ public class StudentService {
 
     public Student getStudent(Long id) {
         return studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 
     public void deleteStudent(Long id) {

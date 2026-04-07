@@ -1,4 +1,4 @@
-package com.general.nitin.springjpa.dto;
+package com.general.nitin.springjpa.dto.request;
 
 import com.general.nitin.springjpa.entity.Student;
 import lombok.AllArgsConstructor;

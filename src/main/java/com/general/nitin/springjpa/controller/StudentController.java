@@ -1,8 +1,11 @@
 package com.general.nitin.springjpa.controller;
 
-import com.general.nitin.springjpa.dto.StudentRequest;
+import com.general.nitin.springjpa.dto.response.ApiResponse;
+import com.general.nitin.springjpa.dto.request.StudentRequest;
 import com.general.nitin.springjpa.entity.Student;
 import com.general.nitin.springjpa.service.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-
 
     private final StudentService studentService;
 
@@ -21,27 +23,29 @@ public class StudentController {
 
     // Create Student with relationships
     @PostMapping
-    public Student createStudent(@RequestBody StudentRequest request) {
-        return studentService.createStudent(
+    public ResponseEntity<ApiResponse<Student>> createStudent(@RequestBody StudentRequest request) {
+        Student student = studentService.createStudent(
                 request.getStudent(),
                 request.getDepartmentId(),
                 request.getCourseIds()
         );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.of(HttpStatus.CREATED.value(), student));
     }
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public ResponseEntity<ApiResponse<List<Student>>> getAllStudents() {
+        return ResponseEntity.ok(ApiResponse.of(HttpStatus.OK.value(), studentService.getAllStudents()));
     }
 
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id) {
-        return studentService.getStudent(id);
+    public ResponseEntity<ApiResponse<Student>> getStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.of(HttpStatus.OK.value(), studentService.getStudent(id)));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
-        return "Student deleted successfully";
+        return ResponseEntity.ok(ApiResponse.of(HttpStatus.OK.value(), "Student deleted successfully"));
     }
 }
