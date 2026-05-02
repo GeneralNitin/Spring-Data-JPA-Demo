@@ -1,5 +1,7 @@
 package com.general.nitin.springjpa.entity;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,11 +21,13 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "student.name is required")
     private String name;
 
     // One-to-One
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
+    @Valid
     private Address address;
 
     // Many-to-One (inverse of One-to-Many)

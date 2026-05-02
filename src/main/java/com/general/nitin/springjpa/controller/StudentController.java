@@ -4,6 +4,7 @@ import com.general.nitin.springjpa.dto.response.ApiResponse;
 import com.general.nitin.springjpa.dto.request.StudentRequest;
 import com.general.nitin.springjpa.entity.Student;
 import com.general.nitin.springjpa.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class StudentController {
 
     // Create Student with relationships
     @PostMapping
-    public ResponseEntity<ApiResponse<Student>> createStudent(@RequestBody StudentRequest request) {
+    public ResponseEntity<ApiResponse<Student>> createStudent(@Valid @RequestBody StudentRequest request) {
+        // validation
         Student student = studentService.createStudent(
                 request.getStudent(),
                 request.getDepartmentId(),
