@@ -2,7 +2,6 @@ package com.general.nitin.springjpa.dto.request;
 
 import com.general.nitin.springjpa.entity.Student;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,10 +16,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Valid
 public class StudentRequest {
 
-    @NotBlank(message = "student details are required")
+    @NotNull(message = "student details are required")
+    @Valid
     private Student student;
 
     @NotNull(message = "departmentId is required")
